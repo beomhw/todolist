@@ -2,15 +2,16 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 import {useTodoState, useTodoDelete} from '../TodoContext';
+import {useTheme} from '../ThemeContext';
 import axios from 'axios';
 
 const TodoHeadBlock = styled.div`
     padding: 48px 32px 32px 24px;
-    border-bottom: 1px solid #e9ecef;
+    border-bottom: 1px solid ${p=>p.theme.background};
     h1 {
         margin: 0;
         font-size: 36px;
-        color: #343a40;
+        color: ${p=>p.theme.text};
     }
     .day {
         margin-top: 4px;
@@ -68,6 +69,7 @@ const SaveButton = styled.button`
 const TodoHead = () => {
     const todos = useTodoState();
     const deleteIds = useTodoDelete();
+    const theme = useTheme();
     const [saveText, setSaveText] = useState('저장');
 
     console.log(todos);
@@ -108,7 +110,7 @@ const TodoHead = () => {
     }
     
     return (
-        <TodoHeadBlock>
+        <TodoHeadBlock theme={theme}>
             <div className="logout">
                 <LogoutButton onClick={onLogout}>로그아웃</LogoutButton>
                 <SaveButton onClick={onSave}>{saveText}</SaveButton>

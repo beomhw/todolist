@@ -3,22 +3,27 @@ import React from 'react';
 import styled from 'styled-components';
 import TodoItem from './TodoItem';
 import {useTodoState} from '../TodoContext';
+import {useTheme} from '../ThemeContext';
 
 const TodoListBlock = styled.div`
     flex: 1; // 자신이 차지 할 수 있는 영역을 꽉 채우도록 설정
     padding: 20px 32px 0 48px;
     overflow-y: auto;
-    background: white; // 사이즈 조정이 잘 되고 있는지 확인하기 위한 임시 스타일
+    background: ${p=>p.theme.container};
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
 `;
 
 const TodoList = () => {
     const todos = useTodoState();
+    const theme = useTheme();
     console.log(todos);
 
     return (
-    <TodoListBlock>
+    <TodoListBlock theme={theme}>
         {todos.map(todo=> (
           <TodoItem
+            theme={theme}
             key={todo.id}
             user_id={todo.user_id}
             id={todo.id}

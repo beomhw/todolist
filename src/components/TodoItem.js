@@ -50,7 +50,7 @@ const CheckCircle = styled.div`
     width: 32px;
     height: 32px;
     border-radius: 16px;
-    border: 1px solid #ced4da;
+    border: 2px solid #ced4da;
     font-size: 24px;
     display: flex;
     align-items: center;
@@ -60,7 +60,7 @@ const CheckCircle = styled.div`
     ${
         props => 
             props.done && css`
-                border: 1px solid #38d9a9;
+                border: 2px solid #38d9a9;
                 color: #38d9a9;
             `
     }
@@ -70,12 +70,15 @@ const CheckCircle = styled.div`
 const Text = styled.div`
     flex: 1;
     font-size: 21px;
-    color: #495057;
+    color: ${p=>p.theme.text};
     ${ 
-        props => props.done && css ` color: #ced4da;`
+        p => p.done && css ` color: #ced4da;`
     };
+    ${
+        p => p.theme.mode === 'dark' && p.done && css ` color: #3c415c;`
+    }
     ${ 
-        props => props.on && css`display: none;`
+        p => p.on && css`display: none;`
     };
     user-select: none;
 `;
@@ -94,7 +97,8 @@ const Form = styled.form`
 const OnInput = styled.input`
     flex: 1;
     font-size: 21px;
-    color: #495057;
+    background-color: ${p=>p.theme.container};
+    color: ${p=>p.theme.text};
     border: 0;
     &:focus {
         outline: none;
@@ -102,7 +106,7 @@ const OnInput = styled.input`
 `;
 
 
-const TodoItem = ({user_id, task_id, task, done, id}) => {
+const TodoItem = ({user_id, task_id, task, done, id, theme}) => {
     const [on, setOn] = useState(true);
     const [todoText, setTodoText] = useState(task);
     const dispatch = useTodoDispatch();
@@ -136,10 +140,10 @@ const TodoItem = ({user_id, task_id, task, done, id}) => {
             <CheckCircle done={done} onClick={onToggle}>
                 {done && <MdDone />}
             </CheckCircle>
-            <Text done={done} on={!on}>{todoText}</Text>
+            <Text theme={theme} done={done} on={!on}>{todoText}</Text>
             {!on && 
                 <Form onSubmit={onSave}>
-                    <OnInput autoFocus value={todoText} onChange={onChange} />
+                    <OnInput autoFocus theme={theme} value={todoText} onChange={onChange} />
                 </Form> 
             }
             {on &&

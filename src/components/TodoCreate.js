@@ -6,6 +6,7 @@ import React, {useState, useEffect} from 'react';
 import styled, {css} from 'styled-components';
 import {MdAdd} from 'react-icons/md';
 import {useTodoDispatch, useTodoNextId} from '../TodoContext';
+import {useTheme} from '../ThemeContext';
 
 const CircleButton = styled.button`
     background: #38d9a9;
@@ -62,20 +63,22 @@ const InsertFormPositioner = styled.div`
 `;
 
 const InsertForm = styled.form`
-    background: #f8f9fa;
+    background: ${p=>p.theme.mode === 'light' ? '#f8f9fa' : '#413c69'};
     padding-left: 32px;
     padding-top: 32px;
     padding-right: 32px;
     padding-bottom: 72px;
     border-bottom-left-radius: 16px;
     border-bottom-right-radius: 16px;
-    border-top: 1px solid #e9ecef;
+    border-top: 1px solid ${p=>p.theme.background};
 `;
 
 const Input = styled.input`
     padding: 12px;
     border-radius: 4px;
-    border: 1px solid #dee2ed;
+    border: 2px solid ${p=>p.theme.container};
+    color: ${p=>p.theme.text};
+    background: ${p=>p.theme.input};
     width: 100%;
     outline: none;
     font-size: 18px;
@@ -91,6 +94,7 @@ const useRandom = () => {
 }
 
 const TodoCreate = () => {
+    const theme = useTheme();
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('');
     const randomText = [
@@ -127,8 +131,9 @@ const TodoCreate = () => {
         <>
             {open && (
                 <InsertFormPositioner>
-                    <InsertForm onSubmit={onSubmit}>
+                    <InsertForm theme={theme} onSubmit={onSubmit}>
                         <Input 
+                            theme={theme}
                             autoFocus 
                             placeholder={randomText[randomNum]}
                             onChange={onChange}

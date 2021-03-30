@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import styled,{css} from 'styled-components';
 import {MdClose} from 'react-icons/md';
 import axios from 'axios';
+import {useTheme} from '../ThemeContext';
 
 const flexAlign = css`
     display: flex;
@@ -13,9 +14,8 @@ const flexAlign = css`
 const OpenInputContainer = styled.div`
     height: 400px;
     width: 500px;
-    background-color: white;
+    background-color: ${p=>p.theme.container};
     margin: 0 auto;
-    transition: 1s;
     border-radius: 20px;
     flex-direction: column;
     ${flexAlign};
@@ -69,6 +69,7 @@ const InputContainer = styled.form`
 `;
 
 const Pstyle = styled.p`
+    color: ${p=>p.theme.text};
     font-size: 20px;
     margin: 10px;
     float: right;
@@ -78,6 +79,8 @@ const Input = styled.input`
     width: 200px;
     height: 30px;
     margin: 10px;
+    background-color: ${p=>p.theme.input};
+    color: ${p=>p.theme.text};
     &:focus{
         outline: none;
     }
@@ -114,6 +117,7 @@ async function jwtRegister(inputs) {
 }
 
 const Register = ({onClose}) => {
+    const theme = useTheme();
     const [inputs, setInputs] = useState({
         userId: '',
         password: '',
@@ -168,7 +172,7 @@ const Register = ({onClose}) => {
     }
 
     return (
-        <OpenInputContainer>
+        <OpenInputContainer theme={theme}>
             <CloseContainer>
                 <CloseButton onClick={onClose}>
                     <MdClose />
@@ -176,16 +180,16 @@ const Register = ({onClose}) => {
             </CloseContainer>
             <Content>
                 <LabelContainer>
-                    <Pstyle>ID</Pstyle>
-                    <Pstyle>비밀번호</Pstyle>
-                    <Pstyle>비밀번호 재확인</Pstyle>
-                    <Pstyle>닉네임</Pstyle>
+                    <Pstyle theme={theme}>ID</Pstyle>
+                    <Pstyle theme={theme}>비밀번호</Pstyle>
+                    <Pstyle theme={theme}>비밀번호 재확인</Pstyle>
+                    <Pstyle theme={theme}>닉네임</Pstyle>
                 </LabelContainer>
                 <InputContainer method="post">
-                    <Input placeholder="아이디를 입력해주세요" onChange={onChange} value={userId} name="userId" />
-                    <Input type="password" placeholder="6자 이상으로 부탁해요" onChange={onChange} value={password} name="password" />
-                    <Input type="password" placeholder="틀리지 않게 조심!" onChange={onChange} value={passwordAgain} name="passwordAgain" />
-                    <Input placeholder="2자 이상으로 부탁해요" onChange={onChange} value={nickname} name="nickname" /> 
+                    <Input theme={theme} placeholder="아이디를 입력해주세요" onChange={onChange} value={userId} name="userId" />
+                    <Input theme={theme} type="password" placeholder="6자 이상으로 부탁해요" onChange={onChange} value={password} name="password" />
+                    <Input theme={theme} type="password" placeholder="틀리지 않게 조심!" onChange={onChange} value={passwordAgain} name="passwordAgain" />
+                    <Input theme={theme} placeholder="2자 이상으로 부탁해요" onChange={onChange} value={nickname} name="nickname" /> 
                 </InputContainer>
             </Content>
             <RegisterButton onClick={onSubmit}>{registerText}</RegisterButton>

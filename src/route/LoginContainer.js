@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import styled, {css} from 'styled-components';
 import Login from '../components/Login';
 import Register from '../components/Register';
+import {useTheme} from '../ThemeContext';
 
 const Container = styled.div`
     width: 500px;
@@ -9,7 +10,7 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: white;
+    background-color: ${p=>p.theme.container};
     border-radius: 20px;
 
     // 페이지 중앙에 나타나도록 설정
@@ -21,6 +22,7 @@ const Container = styled.div`
 
 const ContainerText = styled.p`
     font-size: 1.2em;
+    color: ${p=>p.theme.text};
 `;
 
 const Header = styled.div`
@@ -67,7 +69,7 @@ const RegisterInput = styled.p`
 `;
 
 const LoginContainer = () => {
-
+    const theme = useTheme();
     const [menu, onMenu] = useState({
         login: false,
         register: false,
@@ -78,9 +80,9 @@ const LoginContainer = () => {
     
     return (
         <>
-        <Container>
+        <Container theme={theme}>
             <Header>
-                <ContainerText>할일 체크 리스트</ContainerText>
+                <ContainerText theme={theme}>할일 체크 리스트</ContainerText>
             </Header>
             <Content>
                 <LoginInput menu={menu.login} onClick={onLogin}>로그인</LoginInput>

@@ -1,6 +1,7 @@
 import React, {createContext, useReducer, useContext, useRef, useState, useEffect} from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import {useTheme} from './ThemeContext';
 
 const LoadingContainer = styled.div`
     font-weight: bold;
@@ -8,6 +9,7 @@ const LoadingContainer = styled.div`
     width: 200px;
     display: flex;
     justify-content: center;
+    color: ${p=>p.theme.text};
     // 페이지 중앙에 나타나도록 설정
     margin: 0 auto;
     margin-top: 96px;
@@ -55,6 +57,7 @@ export function TodoProvider({children}) {
     const [deleteState, deleteDispatch] = useReducer(deleteReducer, initialDeletes);
     const [state, dispatch] = useReducer(todoReducer, initialTodos);
     const [loading, setLoading] = useState(true);
+    const theme = useTheme();
     const store = window.sessionStorage;
     const nextId = useRef(0);
     console.log(state);
@@ -94,7 +97,7 @@ export function TodoProvider({children}) {
         // 그리고 props로 받아온 children 값을 내부에 렌더링해주자
         <>
         {loading ? 
-        <LoadingContainer>Loading...</LoadingContainer> :
+        <LoadingContainer theme={theme}>Loading...</LoadingContainer> :
         <TodoStateContext.Provider value={state}>
             <TodoDispatchContext.Provider value={dispatch}>
                 <TodoNextIdContext.Provider value={nextId}>

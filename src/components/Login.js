@@ -3,6 +3,7 @@ import styled, {css} from 'styled-components';
 import {MdClose} from 'react-icons/md';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
+import {useTheme} from '../ThemeContext';
 
 const flexAlign = css`
     display: flex;
@@ -14,9 +15,8 @@ const OpenInputContainer = styled.div`
     ${flexAlign};
     height: 300px;
     width: 500px;
-    background-color: white;
+    background-color: ${p=>p.theme.container};
     margin: 0 auto;
-    transition: 1s;
     border-radius: 20px;
     flex-direction: column;
 `;
@@ -69,6 +69,7 @@ const Pstyle = styled.p`
     font-size: 20px;
     margin: 10px;
     float: right;
+    color: ${p=>p.theme.text};
 `;
 
 const Input = styled.input`
@@ -79,6 +80,8 @@ const Input = styled.input`
         outline: none;
     }
     border: 1px solid gray;
+    color: ${p=>p.theme.text};
+    background-color: ${p=>p.theme.background};
 `;
 
 const LoginButton = styled.button`
@@ -101,7 +104,7 @@ const LoginButton = styled.button`
 
 
 async function loginJWT (inputs) {
-
+    
     let result = {};
 
     await axios.post('http://localhost/api/login', {
@@ -118,6 +121,7 @@ async function loginJWT (inputs) {
 }
 
 const Login = ({onClose}) => {
+    const theme = useTheme();
     const [inputs, setInputs] = useState({
         userId: '',
         password: '',
@@ -167,7 +171,7 @@ const Login = ({onClose}) => {
     };
 
     return (
-        <OpenInputContainer>
+        <OpenInputContainer theme={theme}>
             <CloseContainer>
                 <CloseButton onClick={onClose}>
                     <MdClose />
@@ -175,12 +179,12 @@ const Login = ({onClose}) => {
             </CloseContainer>
             <Content>
                 <LabelContainer>
-                    <Pstyle>ID</Pstyle>
-                    <Pstyle>비밀번호</Pstyle>
+                    <Pstyle theme={theme}>ID</Pstyle>
+                    <Pstyle theme={theme}>비밀번호</Pstyle>
                 </LabelContainer>
                 <InputContainer method="post">
-                    <Input placeholder="아이디를 주세요" onChange={onChange} value={userId} name="userId" />
-                    <Input placeholder="비밀번호를 몰래 주세요" type="password" onChange={onChange} value={password} name="password" />
+                    <Input theme={theme} placeholder="아이디를 주세요" onChange={onChange} value={userId} name="userId" />
+                    <Input theme={theme} placeholder="비밀번호를 몰래 주세요" type="password" onChange={onChange} value={password} name="password" />
                 </InputContainer>
             </Content>
             <LoginButton onClick={onSubmit}>{loginText}</LoginButton>
