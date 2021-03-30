@@ -42,30 +42,17 @@ const Content = styled.div`
     width: 100%;
 `;
 
-const OpenInput = css`
+const TextInput = styled.p`
     font-size: 16px;
     user-select: none;
     cursor: pointer;
     margin: 10px;
-    color: gray;
+    color: ${p=>p.theme.text};
     &:hover {
-        color: black;
+        color: #20c997;
     }
-    transition-duration: 0.4s;
-`;
-
-const LoginInput = styled.p`
-    ${OpenInput};
-    ${p => p.menu
-        ? css`color: black;` 
-        : css`color: rgba(0, 0, 0, 0.4);` };
-`;
-
-const RegisterInput = styled.p`
-    ${OpenInput};
-    ${p => p.menu
-        ? css`color: black;` 
-        : css`color: rgba(0, 0, 0, 0.4);` };
+    ${p => p.menu && p.theme.mode === 'dark' && css`color: #20c997 ;`};
+    ${p => p.menu && p.theme.mode === 'light' && css`color: #20c997 ;`};
 `;
 
 const LoginContainer = () => {
@@ -85,8 +72,8 @@ const LoginContainer = () => {
                 <ContainerText theme={theme}>할일 체크 리스트</ContainerText>
             </Header>
             <Content>
-                <LoginInput menu={menu.login} onClick={onLogin}>로그인</LoginInput>
-                <RegisterInput menu={menu.register} onClick={onRegister}>회원가입</RegisterInput>
+                <TextInput theme={theme} menu={menu.login} onClick={onLogin}>로그인</TextInput>
+                <TextInput theme={theme} menu={menu.register} onClick={onRegister}>회원가입</TextInput>
             </Content>
         </Container>
         {menu.login && 
