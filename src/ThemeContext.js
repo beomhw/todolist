@@ -6,17 +6,17 @@ import * as THEME from './Util';
 const Theme = {
     dark: {
         mode: 'dark',
-        text: THEME.TEXT_DA,
-        container: THEME.CONTAINER_DA,
-        background: THEME.BACKGROUND_DA,
-        input: THEME.INPUT_DA
+        text: THEME._TEXT_DA,
+        container: THEME._CONTAINER_DA,
+        background: THEME._BACKGROUND_DA,
+        input: THEME._INPUT_DA
     },
     light: {
         mode: 'light',
-        text: THEME.TEXT_LI,
-        container: THEME.CONTAINER_LI,
-        background: THEME.BACKGROUND_LI,
-        input: THEME.INPUT_LI
+        text: THEME._TEXT_LI,
+        container: THEME._CONTAINER_LI,
+        background: THEME._BACKGROUND_LI,
+        input: THEME._INPUT_LI
     }
 }
 

@@ -41,6 +41,8 @@ const todoReducer = (state, action) => {
 const deleteReducer = (state, action) => {
     switch(action.type) {
         case 'DELETE':
+            if(action.task_id === undefined)
+                return state;
             return state.concat(action.task_id);
         default:
             throw new Error(`Unhandled action type: ${action.type}`);
